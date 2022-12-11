@@ -1,0 +1,8 @@
+{
+    "signUp": "Sign up",
+    "username": "username",
+    "email": "email",
+    "password": "password",
+    "repeatPassword": "repeat password",
+    "passwordMismatch": "password mismatch"
+}
