@@ -56,7 +56,10 @@ const SignUpPage = ({ t, i18n }) => {
       : "";
 
   return (
-    <>
+    <div
+      className="col-lg-6 offset-lg-3 col-md-8 offset-md-2"
+      data-testid="sign-up"
+    >
       {!fieldsState.signUpSuccess && (
         <form
           className="card mt-5"
@@ -122,7 +125,7 @@ const SignUpPage = ({ t, i18n }) => {
           Please check your e-mail to activate your account
         </div>
       )}
-    </>
+    </div>
   );
 };
 
