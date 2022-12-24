@@ -1,6 +1,21 @@
 import { getByAltText, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
+import { setupServer } from "msw/node";
+import { rest } from "msw";
+
+const server = setupServer(
+  rest.post("/api/1.0/users/token/:token", (req, res, ctx) => {
+    return res(ctx.status(200));
+  })
+);
+
+beforeEach(() => {
+  server.resetHandlers();
+});
+
+beforeAll(() => server.listen());
+afterAll(() => server.close());
 
 describe("Routing", () => {
   const setUp = (path) => {
@@ -9,12 +24,14 @@ describe("Routing", () => {
   };
 
   it.each`
-    path         | pageTestId
-    ${"/"}       | ${"home-page"}
-    ${"/signup"} | ${"sign-up"}
-    ${"/login"}  | ${"login-page"}
-    ${"/user/1"} | ${"user-page"}
-    ${"/user/2"} | ${"user-page"}
+    path               | pageTestId
+    ${"/"}             | ${"home-page"}
+    ${"/signup"}       | ${"sign-up"}
+    ${"/login"}        | ${"login-page"}
+    ${"/user/1"}       | ${"user-page"}
+    ${"/user/2"}       | ${"user-page"}
+    ${"/activate/123"} | ${"activation-page"}
+    ${"/activate/345"} | ${"activation-page"}
   `("displays $pageTestId page at $path", ({ path, pageTestId }) => {
     setUp(path);
     const signUpPage = screen.queryByTestId(pageTestId);
@@ -65,3 +82,5 @@ describe("Routing", () => {
     expect(screen.getByTestId("home-page")).toBeInTheDocument();
   });
 });
+
+console.error = () => {};

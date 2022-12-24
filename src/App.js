@@ -6,6 +6,7 @@ import { UserPage } from "./pages/UserPage";
 import { useTranslation } from "react-i18next";
 import logo from "./assets/23082612-hoaxify.png";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { AccountActivationPage } from "./pages/AccountActivationPage";
 
 function App() {
   const t = useTranslation();
@@ -33,6 +34,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/user/:id" element={<UserPage />} />
+        <Route path="/activate/:token" element={<AccountActivationPage />} />
       </Routes>
       <LanguageSelector />
     </BrowserRouter>

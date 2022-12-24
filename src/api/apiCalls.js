@@ -9,3 +9,7 @@ export const signUp = (body) => {
     },
   });
 };
+
+export const activate = (token) => {
+  return axios.post("/api/1.0/users/token/" + token);
+};
