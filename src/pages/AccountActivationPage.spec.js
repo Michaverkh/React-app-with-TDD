@@ -7,10 +7,10 @@ import { rest } from "msw";
 let counter = 0;
 const server = setupServer(
   rest.post("/api/1.0/users/token/:token", (req, res, ctx) => {
+    counter += 1;
     if (req.params.token === "5678") {
       return res(ctx.status(400));
     }
-    counter += 1;
     return res(ctx.status(200));
   })
 );
@@ -40,5 +40,27 @@ describe("Account activation page", () => {
     setup("5678");
     const message = await screen.findByText("Account failure");
     expect(message).toBeInTheDocument();
+  });
+
+  it("sends activation request after token is changed", async () => {
+    const match = {
+      params: {
+        token: "1234",
+      },
+    };
+
+    const { rerender } = render(<AccountActivationPage match={match} />);
+    await screen.findByText("Account is activated");
+    match.params.token = "5678";
+    rerender(<AccountActivationPage match={match} />);
+    expect(counter).toBe(2);
+  });
+
+  it("displays spinner during activation api call", async () => {
+    setup("5678");
+    const spinner = screen.queryByRole("status");
+    expect(spinner).toBeInTheDocument();
+    await screen.findByText("Account failure");
+    expect(spinner).not.toBeInTheDocument();
   });
 });
