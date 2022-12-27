@@ -1,27 +1,31 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { activate } from "../api/apiCalls";
+import Alert from "../components/Alert";
+import Spinner from "../components/Spinner";
 
 export const AccountActivationPage = (props) => {
   const [result, setResult] = useState();
+  const params = useParams();
 
   useEffect(() => {
-    setResult();
-    activate(props.match.params.token)
-      .then(() => {
+    async function activateRequest() {
+      try {
+        setResult();
+        await activate(params.token);
         setResult("success");
-      })
-      .catch(() => {
+      } catch (error) {
         setResult("failure");
-      });
-  }, [props.match.params.token]);
+      }
+    }
+    activateRequest();
+  }, [params.token]);
 
-  let content = <span className="spinner-border" role="status"></span>;
+  let content = <Spinner size="big" />;
   if (result === "success") {
-    content = (
-      <div className="alert alert-success mt-3">Account is activated</div>
-    );
+    content = <Alert type={"success"}>Account is activated</Alert>;
   } else if (result === "failure") {
-    content = <div className="alert alert-danger mt-3">Account failure</div>;
+    content = <Alert type={"danger"}>Account failure</Alert>;
   }
 
   return (
