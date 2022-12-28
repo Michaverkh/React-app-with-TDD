@@ -29,7 +29,7 @@ function App() {
           </ul>
         </div>
       </nav>
-      <Routes className="container">
+      <Routes className="container mt-5">
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
