@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { withTranslation } from "react-i18next";
 import { signUp } from "../api/apiCalls";
+import Alert from "../components/Alert";
 import Input from "../components/input";
+import Spinner from "../components/Spinner";
 
 const SignUpPage = ({ t, i18n }) => {
   const [fieldsState, setFieldsState] = useState({
@@ -56,7 +58,10 @@ const SignUpPage = ({ t, i18n }) => {
       : "";
 
   return (
-    <>
+    <div
+      className="col-lg-6 offset-lg-3 col-md-8 offset-md-2"
+      data-testid="sign-up"
+    >
       {!fieldsState.signUpSuccess && (
         <form
           className="card mt-5"
@@ -107,10 +112,9 @@ const SignUpPage = ({ t, i18n }) => {
               }
             >
               {fieldsState.apiProgress && (
-                <span
-                  className="spinner-border spinner-border-sm"
-                  role="status"
-                ></span>
+                <Alert type={"secondary"} text="" center={true}>
+                  <Spinner />
+                </Alert>
               )}
               <span>{t("signUp")}</span>
             </button>
@@ -118,11 +122,9 @@ const SignUpPage = ({ t, i18n }) => {
         </form>
       )}
       {fieldsState.signUpSuccess && (
-        <div className="alert alert-success mt-3">
-          Please check your e-mail to activate your account
-        </div>
+        <Alert>Please check your e-mail to activate your account</Alert>
       )}
-    </>
+    </div>
   );
 };
 
