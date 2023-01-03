@@ -1,5 +1,5 @@
 import axios from "axios";
-import { USERS } from "../constants/API";
+import { BASE_URL, USERS } from "../constants/API";
 import i18n from "../locals/i18n";
 
 export const signUp = (body) => {
@@ -11,9 +11,14 @@ export const signUp = (body) => {
 };
 
 export const activate = (token) => {
-  return axios.post("/api/1.0/users/token/" + token);
+  return axios.post("http://localhost:8080/api/1.0/users/token/" + token);
 };
 
-export const loadUsers = () => {
-  return axios.get(USERS);
+export const loadUsers = (page) => {
+  return axios.get(BASE_URL, {
+    params: {
+      page: page,
+      size: 3,
+    },
+  });
 };

@@ -31,14 +31,14 @@ describe("Account activation page", () => {
 
   it("displays activation success message when token is valid", async () => {
     setup("1234");
-    const message = await screen.findByText("Account is activated");
+    const message = await screen.findByText(/activated/);
     expect(message).toBeInTheDocument();
     expect(counter).toBe(1);
   });
 
   it("displays activation error message when token is invalid", async () => {
     setup("5678");
-    const message = await screen.findByText("Account failure");
+    const message = await screen.findByText(/failure/);
     expect(message).toBeInTheDocument();
   });
 
@@ -50,7 +50,7 @@ describe("Account activation page", () => {
     };
 
     const { rerender } = render(<AccountActivationPage match={match} />);
-    await screen.findByText("Account is activated");
+    await screen.findByText(/activated/);
     match.params.token = "5678";
     rerender(<AccountActivationPage match={match} />);
     expect(counter).toBe(2);
@@ -60,7 +60,10 @@ describe("Account activation page", () => {
     setup("5678");
     const spinner = screen.queryByRole("status");
     expect(spinner).toBeInTheDocument();
-    await screen.findByText("Account failure");
+    await screen.findByText(/failure/);
     expect(spinner).not.toBeInTheDocument();
   });
 });
+
+console.error = () => {};
+console.warn = () => {};

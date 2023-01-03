@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Alert({ type, children, center }) {
-  const classForAlert = `alert alert-${type}`;
+  let classForAlert = `alert alert-${type}`;
   if (center) {
     classForAlert += " text-center";
   }
