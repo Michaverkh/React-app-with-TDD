@@ -6,13 +6,16 @@ import { rest } from "msw";
 
 let counter = 0;
 const server = setupServer(
-  rest.post("/api/1.0/users/token/:token", (req, res, ctx) => {
-    counter += 1;
-    if (req.params.token === "5678") {
-      return res(ctx.status(400));
+  rest.post(
+    "http://localhost:8080/api/1.0/users/token/:token",
+    (req, res, ctx) => {
+      counter += 1;
+      if (req.params.token === "5678") {
+        return res(ctx.status(400));
+      }
+      return res(ctx.status(200));
     }
-    return res(ctx.status(200));
-  })
+  )
 );
 
 beforeEach(() => {

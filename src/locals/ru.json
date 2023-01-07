@@ -4,5 +4,8 @@
     "email": "Электронная почта",
     "password": "Пароль",
     "repeatPassword": "Повторите пароль",
-    "passwordMismatch": "пароли не совпадают"
+    "passwordMismatch": "пароли не совпадают",
+    "users": "Пользователи",
+    "nextPage": "след >",
+    "previousPage": "< пред"
 }

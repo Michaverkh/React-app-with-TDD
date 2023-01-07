@@ -2,11 +2,11 @@ import SignUpPage from "./pages/SignUpPage";
 import LanguageSelector from "./components/LanguageSelector";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
-import { UserPage } from "./pages/UserPage";
 import { useTranslation } from "react-i18next";
 import logo from "./assets/23082612-hoaxify.png";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { AccountActivationPage } from "./pages/AccountActivationPage";
+import UserPage from "./pages/UserPage";
 
 function App() {
   const t = useTranslation();

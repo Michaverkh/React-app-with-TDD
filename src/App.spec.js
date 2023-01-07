@@ -5,9 +5,12 @@ import { setupServer } from "msw/node";
 import { rest } from "msw";
 
 const server = setupServer(
-  rest.post("/api/1.0/users/token/:token", (req, res, ctx) => {
-    return res(ctx.status(200));
-  }),
+  rest.post(
+    "http://localhost:8080/api/1.0/users/token/:token",
+    (req, res, ctx) => {
+      return res(ctx.status(200));
+    }
+  ),
   rest.get("/api/1.0/users", (req, res, ctx) => {
     return res(
       ctx.status(200),
@@ -23,6 +26,17 @@ const server = setupServer(
         page: 0,
         size: 0,
         totalPages: 0,
+      })
+    );
+  }),
+  rest.get("http://localhost:8080/api/1.0/users/:id", (req, res, ctx) => {
+    const id = Number.parseInt(req.params.id);
+    return res(
+      ctx.json({
+        id: id,
+        username: "user" + id,
+        email: "user" + id + "@mail.com",
+        image: null,
       })
     );
   })
@@ -102,7 +116,7 @@ describe("Routing", () => {
 
   it("navigates to user page when clicking the username on user list", async () => {
     setUp("/");
-    const user = await screen.findByText("user-in-list");
+    const user = await screen.findByTestId("user-item");
     userEvent.click(user);
     const page = await screen.findByTestId("user-page");
     expect(page).toBeInTheDocument();

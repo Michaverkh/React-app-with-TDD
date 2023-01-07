@@ -22,3 +22,7 @@ export const loadUsers = (page) => {
     },
   });
 };
+
+export const getUserById = (id) => {
+  return axios.get(`${BASE_URL}/${id}`);
+};

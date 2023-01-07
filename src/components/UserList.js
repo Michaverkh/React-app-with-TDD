@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 import { loadUsers } from "../api/apiCalls";
+import Spinner from "./Spinner";
 import UserListItem from "./UserListItem";
 
-export default class UserList extends Component {
+class UserList extends Component {
   state = {
     page: {
       content: [],
@@ -11,6 +12,7 @@ export default class UserList extends Component {
       size: 0,
       totalPages: 0,
     },
+    pendingApiCall: false,
   };
 
   componentDidMount() {
@@ -20,6 +22,7 @@ export default class UserList extends Component {
   }
 
   loadPage = async (pageIndex) => {
+    this.setState({ pendingApiCall: true });
     try {
       await loadUsers(pageIndex).then((res) => {
         this.setState({ page: res.data });
@@ -27,19 +30,22 @@ export default class UserList extends Component {
     } catch (error) {
       console.log("users failure", error);
     }
+    this.setState({ pendingApiCall: false });
   };
 
   render() {
     const { totalPages, page, content } = this.state.page;
+    const { pendingApiCall } = this.state;
+    const { t } = this.props;
 
     return (
       <div className="card">
         <header className="card-header text-center">
-          <h3>Users</h3>
+          <h3>{t("users")}</h3>
         </header>
         <ul className="list-group list-group-flush">
           {content.map((user) => {
-            return <UserListItem user={user} />;
+            return <UserListItem user={user} key={user.id} />;
           })}
         </ul>
         <div className="card-footer">
@@ -48,7 +54,7 @@ export default class UserList extends Component {
               className="btn btn-outline-secondary btn-sm"
               onClick={() => this.loadPage(page - 1)}
             >
-              {"< previous"}
+              {t("previousPage")}
             </button>
           )}
           {totalPages > page + 1 && (
@@ -56,22 +62,14 @@ export default class UserList extends Component {
               className="btn btn-outline-secondary btn-sm"
               onClick={() => this.loadPage(page + 1)}
             >
-              {"next >"}
+              {t("nextPage")}
             </button>
           )}
+          {pendingApiCall && <Spinner size="big" />}
         </div>
       </div>
     );
   }
 }
 
-/*
-<Link
-className="list-group-item list-group-item-action"
-key={user.id}
-to={`/user/${user.id}`}
-style={{ cursor: "pointer" }}
->
-{user.username}
-</Link> 
-*/
+export default withTranslation()(UserList);
