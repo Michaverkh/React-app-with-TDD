@@ -6,9 +6,9 @@ export default function UserListItem({ user }) {
   return (
     <Link
       className="list-group-item list-group-item-action"
-      key={user.id}
       to={`/user/${user.id}`}
       style={{ cursor: "pointer" }}
+      data-testid="user-item"
     >
       <img
         src={defaultProfileIcon}

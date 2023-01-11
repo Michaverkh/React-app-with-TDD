@@ -14,8 +14,6 @@ import "../locals/i18n";
 import en from "../locals/en.json";
 import ru from "../locals/ru.json";
 import LanguageSelector from "../components/LanguageSelector";
-import i18n from "../locals/i18n";
-import { act } from "react-dom/test-utils";
 
 let requestBody;
 let counter = 0;
@@ -161,9 +159,6 @@ describe("Sign up page", () => {
       setup();
       const form = screen.getByTestId("form-sign-up");
       userEvent.click(button);
-      // await waitFor(() => {
-      //   expect(form).not.toBeInTheDocument();
-      // });
       await waitForElementToBeRemoved(form);
     });
 
@@ -256,12 +251,6 @@ describe("Sign up page", () => {
       passwordInput = screen.getByLabelText("password");
       repeatPasswordInput = screen.getByLabelText("repeat password");
     };
-
-    afterEach(() => {
-      act(() => {
-        i18n.changeLanguage("en");
-      });
-    });
 
     it("initially displays English text", () => {
       setUp();

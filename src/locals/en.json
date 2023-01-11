@@ -4,5 +4,8 @@
     "email": "email",
     "password": "password",
     "repeatPassword": "repeat password",
-    "passwordMismatch": "password mismatch"
+    "passwordMismatch": "password mismatch",
+    "users": "Users",
+    "nextPage": "next >",
+    "previousPage": "< previous"
 }
